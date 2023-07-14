@@ -135,8 +135,11 @@ def tobs():
 def temp_start(start):
     session = Session(engine)
     # Get min, max, and average temp
-    result = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs),\
-                           func.max(Measurement.tobs)).filter(Measurement.date >= start).all()
+    result = session.query(func.min(Measurement.tobs), \
+                           func.avg(Measurement.tobs),\
+                           func.max(Measurement.tobs)).\
+                           filter(Measurement.date >= start).\
+                           group_by(Measurement.date).all()
     session.close()
 
     # Create an empty list
@@ -153,7 +156,31 @@ def temp_start(start):
     
     return jsonify(tobs)
 
+@app.route("/api/v1.0/<start>/<end>")
+def temp_start_end(start, end):
+    session = Session(engine)
+    # Get min, max, and average temp
+    result = session.query(func.min(Measurement.tobs), \
+                           func.avg(Measurement.tobs),\
+                           func.max(Measurement.tobs)).\
+                            filter(Measurement.date >= start).\
+                            filter(Measurement.date <= end).\
+                            group_by(Measurement.date).all()
+    session.close()
 
+    # Create an empty list
+    tobs = []
+    # Run through a for loop
+    for min, avg, max in result:
+        # Create an empty dictionary and store min, avg, and max key/value pairs
+        dict = {}
+        dict["Min"] = min
+        dict["Average"] = avg
+        dict["Max"] = max
+        # Append dictionary to list
+        tobs.append(dict)
+    
+    return jsonify(tobs)
 
 
 if __name__ == "__main__":
