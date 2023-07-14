@@ -182,6 +182,5 @@ def temp_start_end(start, end):
     
     return jsonify(tobs)
 
-
 if __name__ == "__main__":
     app.run(debug=True)
