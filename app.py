@@ -20,7 +20,7 @@ engine = create_engine("sqlite:///Resources/hawaii.sqlite")
 Base = automap_base()
 
 # reflect the tables
-Base.prepare(autoload_with=engine)
+Base.prepare(engine, reflect = True)
 
 # Save references to each table
 Measurement = Base.classes.measurement
@@ -47,8 +47,8 @@ def welcome():
         f"Preciptiation: /api/v1.0/precipitation<br/>"
         f"Stations: /api/v1.0/stations<br/>"
         f"Temperature for one year: /api/v1.0/tobs<br/>"
-        f"Temperature from start date: /api/v1.0/<start><br/>"
-        f"Temperature from start to end date: /api/v1.0/<start>/<end>"
+        f"Temperature from start date (enter start date to begin): /api/v1.0/<start><br/>"
+        f"Temperature from start to end date (enter start and end date to begin): /api/v1.0/<start>/<end>"
     )
 
 @app.route("/api/v1.0/precipitation")
@@ -57,9 +57,15 @@ def precipitation():
     session = Session(engine)
     # Define columns to select
     sel = [Measurement.date, Measurement.prcp]
-    # Execute query
-    result = session.query(*sel).all()
-    session.close
+    # Get the most recent date
+    rec_date = session.query(Measurement.date).order_by(Measurement.date.desc()).first()[0]
+    # Convert the most recent date to a datetime object
+    rec_date = dt.datetime.strptime(rec_date, "%Y-%m-%d")
+    # Calculate the date one year ago from the most recent date
+    year_ago = dt.date(rec_date.year - 1, rec_date.month, rec_date.day)
+    # Query the data for the last year
+    result = session.query(*sel).filter(Measurement.date >= year_ago).all()
+    session.close()
 
     # Create an empty list to store results
     precipitation = []
