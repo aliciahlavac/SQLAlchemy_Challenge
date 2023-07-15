@@ -5,6 +5,7 @@ In this project, I conducted a climate analysis and developed a Flask API to exp
 To begin, I established a connection to the SQLite database file using the SQLAlchemy library's create_engine() function. Using automap_base(), I reflected the tables in the database (station and measurement) into Python classes, enabling easy access to the data.
 
 For the precipitation analysis, I first determined the most recent date in the dataset. Using this date, I queried the previous 12 months of precipitation data. The retrieved data was loaded into a Pandas DataFrame, where I specified the column names and sorted the values by date. Visualizing the results, I plotted the precipitation data using the DataFrame's plot method. Additionally, I used Pandas to calculate and print the summary statistics for the precipitation data.
+
 ![Precipitation](https://github.com/aliciahlavac/SQLAlchemy_Challenge/assets/127240852/19015184-5529-4430-824e-34aed36aaa48)
 
 Moving on to the station analysis, I calculated the total number of stations available in the dataset. To find the most active stations, I listed the stations and their observation counts in descending order. By identifying the station with the highest number of observations, I designed a query to calculate the lowest, highest, and average temperatures for that specific station. Furthermore, I obtained the temperature observation data (TOBS) for the most active station from the previous 12 months and visualized it as a histogram.
