@@ -44,9 +44,9 @@ def welcome():
     # List all available api routes
     return (
         f"Available Routes:<br/>"
-        f"Preciptiation: /api/v1.0/precipitation<br/>"
-        f"Stations: /api/v1.0/stations<br/>"
-        f"Temperature for one year: /api/v1.0/tobs<br/>"
+        f"Preciptiation data from 2016-08-23 to 2017-08-23: /api/v1.0/precipitation<br/>"
+        f"Information about stations: /api/v1.0/stations<br/>"
+        f"Temperature for one year from 2016-08-23 to 2017-08-23: /api/v1.0/tobs<br/>"
         f"Temperature from start date (enter start date to begin): /api/v1.0/<start><br/>"
         f"Temperature from start to end date (enter start and end date to begin): /api/v1.0/<start>/<end>"
     )
