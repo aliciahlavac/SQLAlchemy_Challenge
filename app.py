@@ -47,8 +47,8 @@ def welcome():
         f"Preciptiation data from 2016-08-23 to 2017-08-23: /api/v1.0/precipitation<br/>"
         f"Information about stations: /api/v1.0/stations<br/>"
         f"Temperature for one year from 2016-08-23 to 2017-08-23: /api/v1.0/tobs<br/>"
-        f"Temperature from start date (enter start date to begin): /api/v1.0/<start><br/>"
-        f"Temperature from start to end date (enter start and end date to begin): /api/v1.0/<start>/<end>"
+        f"Temperature from start date (enter start date to begin in the form of YYYY-MM-DD): /api/v1.0/start<br/>"
+        f"Temperature from start to end date (enter start and end date to begin in the form of YYYY-MM-DD): /api/v1.0/start/end"
     )
 
 @app.route("/api/v1.0/precipitation")
